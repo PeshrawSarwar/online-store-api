@@ -17,6 +17,7 @@ namespace online_store_api.Helpers{
             var root = await _httpClient.GetFromJsonAsync<CurrencyScoopRoot>(url);
 
             return root.Response;
+            
          }
         
     }
