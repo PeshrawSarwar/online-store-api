@@ -1,3 +1,6 @@
+using System.ComponentModel.DataAnnotations;
+using System.Net;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using online_store_api.Data;
@@ -8,6 +11,7 @@ namespace online_store_api.Controllers
     [Route("[controller]")]
     // change the behaviour of the controller
     [ApiController]
+    [Authorize]
 
     public class ProductsController : ControllerBase {
         private readonly ApplicationDbContext _dbContext;
@@ -15,41 +19,9 @@ namespace online_store_api.Controllers
         public ProductsController(ApplicationDbContext dbContext) {
             _dbContext = dbContext;
         }
-        // create a dubm list of product
-        // private readonly static List<Product> _products = new List<Product> {
-        //     new Product {
-        //         Id = 1,
-        //         Name = "Product 1",
-        
-        //     },
-        //     new Product {
-        //         Id = 2,
-        //         Name = "Product 2",
-           
-        //     },
-        //     new Product {
-        //         Id = 3,
-        //         Name = "Product 3",
-      
-        //     },
-        //      new Product {
-        //         Id = 4,
-        //         Name = "Product 11",
-        
-        //     },
-        //     new Product {
-        //         Id = 5,
-        //         Name = "Product 22",
-           
-        //     },
-        //     new Product {
-        //         Id = 6,
-        //         Name = "Product 33",
-      
-        //     },
-            
-        // };
 
+        // To Authorize a specific route
+        // [Authorize]
         [HttpGet]
         public async Task<Page<Product>>  GetAllProducts(string? name = "", int pageIndex = 0, int pageSize = 3) {
 
@@ -105,6 +77,7 @@ namespace online_store_api.Controllers
 
         // update the product
         [HttpPut("{id}")]
+        // [ProducesResponseType(HttpStatusCode.BadRequest)]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
@@ -136,6 +109,9 @@ namespace online_store_api.Controllers
 
 
     public class ProductRequest {
+
+        [Required]
+        [MinLength(5)]
         public string Name { get; set; }
 
         public Product ToModel() {

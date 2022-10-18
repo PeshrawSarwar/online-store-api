@@ -10,11 +10,14 @@ namespace online_store_api.Data{
         //     => optionsBuilder.UseNpgsql("");
 
         public DbSet<Product> Products { get; set; }
-        public DbSet<Category> Categories { get; set; }
+
+        // users
+        public DbSet<User> Users { get; set; }
+  
     }
 
     // table na§
-    [Table("users")]
+    [Table("products")]
     public class Product{
         public int Id { get; set;}
         [MaxLength(50)]
@@ -22,13 +25,34 @@ namespace online_store_api.Data{
         public string Name { get; set; }
     }
 
-    [Table("categories")]
-    public class Category{
-        public int Id { get; set;}
-        [MaxLength(50)]
+    // users table
+    [Table("users")]
+    public class User{
 
-        public string Name { get; set; }
+        [StringLength(50)]
+        public string Id { get; set;}
+
+        [StringLength(50)]
+        public string FullName { get; set; }
+
+        [StringLength(50)]
+        // email
+        public string Email { get; set; }
+
+        [StringLength(50)]
+        public string PasswordHash { get; set; }
+
+        [StringLength(50)]
+        public string PasswordSalt { get; set; }
+
+        // Role
+        [StringLength(50)]
+        public string Role { get; set; }
+
+        public bool IsActive { get; set; } = true;
     }
+
+    
 
     
 
